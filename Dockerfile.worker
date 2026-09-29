@@ -1,0 +1,29 @@
+# Use Node.js as base image
+FROM node:20-slim
+
+# Install FFmpeg and required libraries
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libass-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (only production to keep image small)
+RUN npm install --omit=dev
+
+# Copy the rest of the application
+COPY . .
+
+# Set environment variables (defaults)
+ENV NODE_ENV=production
+ENV MAX_CONCURRENT_RENDERS=1
+ENV MAX_VIDEO_DURATION=300
+ENV MAX_RENDER_ATTEMPTS=3
+
+# The worker entrypoint
+CMD ["npx", "tsx", "worker.ts"]

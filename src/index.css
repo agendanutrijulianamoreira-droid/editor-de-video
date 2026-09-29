@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
+
+/* Custom dark/slate creative styling for canvas and handles */
+.react-flow__attribution {
+  display: none !important;
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 2px solid #0f172a;
+  background: #3b82f6;
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle:hover {
+  background: #60a5fa;
+  transform: scale(1.2);
+}
+
+.react-flow__edge-path {
+  stroke: #475569;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #3b82f6;
+  stroke-width: 2.5;
+}

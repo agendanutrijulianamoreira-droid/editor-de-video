@@ -1,0 +1,6 @@
+{
+  "name": "VideoFlow AI",
+  "description": "Editor automatizado de vídeos baseado em workflows visuais e nós inteligentes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

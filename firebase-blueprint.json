@@ -1,0 +1,180 @@
+{
+  "entities": {
+    "Profile": {
+      "title": "User Profile",
+      "description": "User account information and settings.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Firebase UID" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "createdAt", "updatedAt"]
+    },
+    "Project": {
+      "title": "Video Project",
+      "description": "A video editing project associated with a user and a workflow.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 255 },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "uploading", "ready", "processing", "completed", "error"]
+        },
+        "workflowId": { "type": "string" },
+        "stylePresetId": { "type": "string" },
+        "originalVideoPath": { "type": "string" },
+        "originalFilename": { "type": "string" },
+        "durationSeconds": { "type": "number" },
+        "width": { "type": "number" },
+        "height": { "type": "number" },
+        "aspectRatio": { "type": "string" },
+        "fileSize": { "type": "number" },
+        "mimeType": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "status", "createdAt", "updatedAt"]
+    },
+    "Workflow": {
+      "title": "Video Workflow",
+      "description": "A visual node-based workflow for video processing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 255 },
+        "version": { "type": "number" },
+        "stylePresetId": { "type": "string" },
+        "nodesJson": { "type": "string", "description": "Serialized nodes" },
+        "edgesJson": { "type": "string", "description": "Serialized edges" },
+        "favorite": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "nodesJson", "edgesJson", "createdAt", "updatedAt"]
+    },
+    "StylePreset": {
+      "title": "Style Preset",
+      "description": "Visual branding and style configuration.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 255 },
+        "configJson": { "type": "string", "description": "Serialized style configuration" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "configJson", "createdAt", "updatedAt"]
+    },
+    "Transcription": {
+      "title": "Transcription",
+      "description": "Raw audio transcription and timestamps.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "sourceHash": { "type": "string" },
+        "text": { "type": "string" },
+        "language": { "type": "string" },
+        "duration": { "type": "number" },
+        "segmentsJson": { "type": "string" },
+        "wordsJson": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "projectId", "sourceHash", "text", "createdAt"]
+    },
+    "Analysis": {
+      "title": "Analysis (EDL)",
+      "description": "Smart analysis and Edit Decision List.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "transcriptHash": { "type": "string" },
+        "edlJson": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "projectId", "transcriptHash", "edlJson", "createdAt", "updatedAt"]
+    },
+    "UsageEvent": {
+      "title": "Usage Event",
+      "description": "Record of AI usage and costs.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "operation": { "type": "string" },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "inputTokens": { "type": "number" },
+        "outputTokens": { "type": "number" },
+        "durationSeconds": { "type": "number" },
+        "estimatedCost": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "projectId", "operation", "provider", "model", "createdAt"]
+    },
+    "RenderJob": {
+      "title": "Render Job",
+      "description": "Record of a video rendering task.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "status": { "type": "string" },
+        "progress": { "type": "number" },
+        "currentOperation": { "type": "string" },
+        "error": { "type": "string" },
+        "outputUrl": { "type": "string" },
+        "diagnosticsJson": { "type": "string" },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "projectId", "status", "progress", "startedAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/profiles/{userId}": {
+      "schema": "Profile",
+      "description": "Users' public/private profiles."
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Projects created by users."
+    },
+    "/workflows/{workflowId}": {
+      "schema": "Workflow",
+      "description": "Reusable workflows defined by users."
+    },
+    "/style_presets/{presetId}": {
+      "schema": "StylePreset",
+      "description": "Style presets defined by users."
+    },
+    "/transcripts/{transcriptionId}": {
+      "schema": "Transcription",
+      "description": "Transcriptions for projects."
+    },
+    "/analyses/{analysisId}": {
+      "schema": "Analysis",
+      "description": "Analyses and EDLs for projects."
+    },
+    "/usage_events/{eventId}": {
+      "schema": "UsageEvent",
+      "description": "Usage logs for billing/quota."
+    },
+    "/render_jobs/{jobId}": {
+      "schema": "RenderJob",
+      "description": "Video rendering tasks and status."
+    }
+  }
+}
